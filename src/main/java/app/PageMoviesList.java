@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 
 
 /**
@@ -89,10 +90,17 @@ public class PageMoviesList implements Handler {
         for (Movie movie : movies) {
             html = html + "<li>" + movie.name + " was made in " + movie.year + "</li>";
         }
-        html = html + "</ul>";
         
-        // TODO: Add your code here for the other queries
+        JDBCConnection jdbc1 = new JDBCConnection();
+        ArrayList<Movie> Type = jdbc1.getType();
+        html = html + "<select name=\"type\" id=\"type\">";
 
+        // Loop through all the types
+        for (String type : Types.types) {
+            html = html + "<option value=\"" + type + "\">" + type + "</option>";
+        }
+
+        html = html + "</select>";
 
         // Close Content div
         html = html + "</div>";
@@ -121,7 +129,7 @@ public class PageMoviesList implements Handler {
      */
     public ArrayList<String> getMovieTitles() {
         // Create the ArrayList to return - of Strings for the movie titles
-        ArrayList<String> movies = new ArrayList<String>();
+        ArrayList<String> movies = new ArrayList<>();
 
         // Setup the variable for the JDBC connection
         Connection connection = null;
